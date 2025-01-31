@@ -1,5 +1,8 @@
 
-*.csv
+
 notebooks/notes.py
 notebooks/EDA_jaume.ipynb
 notebooks/explicacion_azure.ipynb
+data/dffinal.csv
+data/model.csv
+data/vehiculos-de-segunda-mano-sample.csv

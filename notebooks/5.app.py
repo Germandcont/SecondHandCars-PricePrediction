@@ -18,11 +18,7 @@ df = pd.read_csv(r"C:\Users\Germán\Github\ProyectoFinal\data\azure_data.csv")
 # Configuración de la página
 st.set_page_config(page_title="Opticar - Soluciones Rentables", layout="wide")
 
-# Cargar el banner desde la carpeta del proyecto
-banner = Image.open("banner_opticar.jpg")
 
-# Mostrar el banner en la parte superior de la aplicación
-st.image(banner, use_column_width=True)
 
 
 # Aplicar estilos personalizados al menú lateral
