@@ -1,6 +1,6 @@
 # Under construction.... 🚧 
 
-#  Used Cars Project ***(With Azure Machine Learning Studio)***
+#  Data-Driven Used Car Project ***(With Azure Machine Learning Studio, Python and PowerBi)***
 
 ### Project goal 
 In this project, we assumed the role of data analysts and data scientists to develop a strategic solution for optimizing used car sales. Using real-world data from second-hand car listings in Spain, we built a predictive pricing model with Azure ML Automated to estimate the optimal market price of a vehicle based on key attributes such as brand, model, mileage, horsepower, and year of manufacture.
