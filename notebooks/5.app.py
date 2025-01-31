@@ -13,7 +13,7 @@ import ssl
 
 
 #CARGAMOS EL DATASET
-df = pd.read_csv(r"C:\Users\Germán\Github\ProyectoFinal\data\azure_data.csv")
+df = pd.read_csv("data/azure_data.csv")
 
 # Configuración de la página
 st.set_page_config(page_title="Opticar - Soluciones Rentables", layout="wide")
@@ -110,7 +110,7 @@ elif menu_lateral == "Visión General":
 
 
     #Leer 2 df 
-    df1 = pd.read_csv(r"C:\Users\Germán\Github\ProyectoFinal\data\car_price.csv")
+    df1 = pd.read_csv("data/car_price.csv")
 
     st.write("Para poder entregar una asesoría de calidad hemos analizado coches en venta de segunda mano provenientes de toda España.")
 
