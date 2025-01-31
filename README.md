@@ -17,4 +17,5 @@ Additionally, we conducted data extraction, preprocessing, exploratory analysis,
 
 
 ## Streamlit App (Final Report) ***with PowerBi included***
-DEPLOY APP: https://secondhandcars-priceprediction-6unveathrc59ywyzqcrhz9.streamlit.app/
+DEPLOY APP: https://secondhandcars-priceprediction-6unveathrc59ywyzqcrhz9.streamlit.app/ <br/>
+**This is not the final version**
