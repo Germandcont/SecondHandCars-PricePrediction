@@ -1,2 +1,5 @@
 
 *.csv
+notebooks/notes.py
+notebooks/EDA_jaume.ipynb
+notebooks/explicacion_azure.ipynb
