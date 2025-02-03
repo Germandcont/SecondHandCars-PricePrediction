@@ -13,13 +13,18 @@ import ssl
 
 
 #CARGAMOS EL DATASET
-df = pd.read_csv("data/azure_data.csv")
+df = pd.read_csv('data/car_price 2.csv')
+
+#Creamos un anueva columna que sea la combinación de marca y modelo
+df['brand_model'] = df['make'] + ' ' + df['model']
+
+#Convertir la columna 'year' a formato datetime
+df['year_formato_fecha'] = pd.to_datetime(df['year'], format='%Y')
 
 # Configuración de la página
 st.set_page_config(page_title="Opticar - Soluciones Rentables", layout="wide")
 
-
-
+#Banner
 
 # Aplicar estilos personalizados al menú lateral
 st.markdown("""
@@ -48,7 +53,7 @@ st.markdown("""
 
 # Configuración del menú lateral
 menu_lateral = st.sidebar.radio("Selecciona una opción:", 
-    ["Introducción", "Visión General", "Segmentación de Ventas", "Tendencias del Mercado", "Modelo predictivo","Conclusiones"]
+    ["Introducción", "Visión General", "Tendencia de mercado","Modelo predictivo","Conclusiones"]
 )
 
 # SOLO SE MUESTRA LA INTRODUCCIÓN CUANDO SE SELECCIONA "Introducción"
@@ -109,37 +114,13 @@ elif menu_lateral == "Visión General":
     st.markdown("## 📊 Visión General")
 
 
-    #Leer 2 df 
-    df1 = pd.read_csv("data/car_price.csv")
-
     st.write("Para poder entregar una asesoría de calidad hemos analizado coches en venta de segunda mano provenientes de toda España.")
 
-    #Mapa España con lat y long
-    st.markdown("### 🗺️ Mapa de Vehículos en Venta")
-
-    Q1_lat = df1['lat'].quantile(0.25)
-    Q3_lat = df1['lat'].quantile(0.75)
-    IQR_lat = Q3_lat - Q1_lat
-
-    Q1_long = df1['long'].quantile(0.25)
-    Q3_long = df1['long'].quantile(0.75)
-    IQR_long = Q3_long - Q1_long
-
-    # Definir los límites para detectar outliers
-    lower_bound_lat = Q1_lat - 1.5 * IQR_lat
-    upper_bound_lat = Q3_lat + 1.5 * IQR_lat
-
-    lower_bound_long = Q1_long - 1.5 * IQR_long
-    upper_bound_long = Q3_long + 1.5 * IQR_long
-
-    # Filtrar los datos para eliminar los outliers
-    df1_filtered = df1[(df1['lat'] >= lower_bound_lat) & (df1['lat'] <= upper_bound_lat) &
-                                (df1['long'] >= lower_bound_long) & (df1['long'] <= upper_bound_long)]
 
 
     # Crear un mapa con Plotly Express
     fig = px.scatter_mapbox(
-        df1_filtered, 
+        df, 
         lat="lat", 
         lon="long", 
         hover_name="make", 
@@ -167,7 +148,7 @@ elif menu_lateral == "Visión General":
 #TAB 1
         with tab1:
             # Gráfico de barras con las marcas de coches (Top 35)
-            marca_counts = df1['make'].value_counts().head(35)
+            marca_counts = df['make'].value_counts().head(35)
             fig_marcas = px.bar(marca_counts, x=marca_counts.index, y=marca_counts.values, labels={'x': 'Marca', 'y': 'Cantidad'}, title="Top 35 Marcas de Coches por Cantidad", color_discrete_sequence=['orange'])
             st.plotly_chart(fig_marcas)
 
@@ -175,7 +156,7 @@ elif menu_lateral == "Visión General":
 #TAB 2
         with tab2:
             # Gráfico de tarta con el tipo de combustible
-            fuel_counts = df1['fuel'].value_counts()
+            fuel_counts = df['fuel'].value_counts()
             fig_fuel = px.pie(fuel_counts, values=fuel_counts.values, names=fuel_counts.index, title="Distribución del Tipo de Combustible", color_discrete_sequence=['#F4A460', '#CD853F'])
             st.plotly_chart(fig_fuel)
 
@@ -184,10 +165,10 @@ elif menu_lateral == "Visión General":
             # Crear segmentos de kilometraje
             bins = [0, 50000, 100000, 150000, 200000, np.inf]
             labels = ['Bajo (0-50k)', 'Medio (50k-100k)', 'Medio Alto (100k-150k)', 'Alto (150k-200k)', 'Muy Alto (>200k)']
-            df1['kms_segment'] = pd.cut(df1['kms'], bins=bins, labels=labels, right=False)
+            df['kms_segment'] = pd.cut(df['kms'], bins=bins, labels=labels, right=False)
 
             # Contar la cantidad de coches en cada segmento
-            kms_segment_counts = df1['kms_segment'].value_counts().sort_index()
+            kms_segment_counts = df['kms_segment'].value_counts().sort_index()
 
             # Crear gráfico de barras
             fig_kms_segment = px.bar(kms_segment_counts, x=kms_segment_counts.index, y=kms_segment_counts.values, 
@@ -199,10 +180,10 @@ elif menu_lateral == "Visión General":
             # Crear segmentos de potencia
             bins = [0, 100, 200, 300, 400, np.inf]
             labels = ['Baja (0-100 CV)', 'Media (100-200 CV)', 'Alta (200-300 CV)', 'Muy Alta (300-400 CV)', 'Extrema (>400 CV)']
-            df1['power_segment'] = pd.cut(df1['power'], bins=bins, labels=labels, right=False)
+            df['power_segment'] = pd.cut(df['power'], bins=bins, labels=labels, right=False)
 
             # Contar la cantidad de coches en cada segmento
-            power_segment_counts = df1['power_segment'].value_counts().sort_index()
+            power_segment_counts = df['power_segment'].value_counts().sort_index()
 
             # Crear gráfico de barras
             fig_power_segment = px.bar(power_segment_counts, x=power_segment_counts.index, y=power_segment_counts.values, 
@@ -212,27 +193,246 @@ elif menu_lateral == "Visión General":
             st.plotly_chart(fig_power_segment)
         
 
+# TENDENCIA DE MERCADO
+elif menu_lateral == "Tendencia de mercado":
+    st.markdown("## 📈 Tendencia de Mercado")
+
+    st.write("En esta sección se analizarán los precios del mercado de vehículos de coches de segunda mano en cuanto a diferentes características como la marca, la zona geográfica, potencia, kilometraje, etc.")
+    #tabs 
+    tab1, tab2, tab3, tab4 = st.tabs(['Análisis de marcas',"Análisis por potencia", 'Análisis por kilometraje', "Análisis geográfico"])
+
+#TAB 1
+    with tab1:
+
+        st.write("En este apartado se realiza un análisis de las marcas de coches más vendidas en el mercado de segunda mano.")
+        analisis_seleccionado = st.radio("Selecciona el Análisis:",["Precio Medio y Rango de Precios", "Modelos más populares", "Depreciación de Precio"])
+
+        # Selección Múltiple de Marcas
+        marcas_disponibles = list(df["make"].unique())
+        marcas_seleccionadas = st.multiselect(
+            "🔎 Filtrar por Marca:",
+            ["Todas"] + marcas_disponibles,
+            default=["Todas"]
+        )
+
+        #Filtrar DataFrame según la selección múltiple
+        if "Todas" in marcas_seleccionadas:
+            df_filtrado = df  # Mostrar todas las marcas
+        else:
+            df_filtrado = df[df["make"].isin(marcas_seleccionadas)]  # Filtrar solo las seleccionadas
+
+        #PRECIO MEDIO Y RANGO DE PRECIOS
+        if analisis_seleccionado == "Precio Medio y Rango de Precios":
+            st.markdown("## Precio Medio y Rango de Precios por Marca")
+            st.write("""
+            En este análisis se muestra la distribución de precios para cada marca seleccionada.  
+            Se puede visualizar la dispersión de los valores y la diferencia entre marcas premium y marcas más accesibles.
+            """)
+
+            # 📊 Gráfico de Boxplot (Distribución de Precios por Marca con Selección Múltiple)
+            fig = px.box(
+                df_filtrado,
+                x="make",
+                y="price",
+                title=f"Distribución de Precios por Marca",
+                labels={"make": "Marca", "price": "Precio (€)"},
+                color="make"
+            )
+            fig.update_layout(xaxis_tickangle=-45)
+            st.plotly_chart(fig, key="boxplot_precio_marca")
+
+            st.markdown("""
+            Como era de esperar, marcas como **Tesla, Maserati, Ferrari, Bentley y Lamborghini** son las que tienen por lo general los precios más elevados. 
+            Notese que **Audi, Mercedes-Benz y BMW** tienen vehículos en un rango de precio muy elevado también como podemos ver en sus outliers, sin embargo también tenemos coches más económicos.
+
+            Entre las marcas más económicas podemos encontrar **Galloper, Lancia, Daihatsu, Daewoo, Chrysler, FIAT, Suzuki, Subaru, MG**.
+
+            Si queremos ***atraer a clientes con alto poder adquisitivo*** nos podríamos centrar en adquirir las ***marcas con los precios más elevados*** mientras que si queremos atraer a un ***poder adquisitivo bajo*** nos 
+            podríamos ***centrar más en las segundas***.""")
+
+            st.markdown("""
+            <hr>
+            <p style="text-align: center; font-size: 14px; color: #7D6B5B; font-style: italic;">
+                <i>El presente informe ha sido elaborado en el margen de la relación contractual entre <b>Opticar</b> y <b>AutoMaster Select</b>,
+                con el propósito de proporcionar asesoramiento estratégico basado en el análisis de datos. Toda la información contenida en este
+                documento es confidencial y ha sido obtenida de fuentes de datos recopiladas mediante técnicas de web scraping. Su uso está estrictamente
+                limitado a los términos y condiciones acordados entre ambas partes.</i>
+            </p>
+        """, unsafe_allow_html=True)
 
 
-# SOLO SE MUESTRA SEGMENTACIÓN CUANDO SE SELECCIONA ESA OPCIÓN
-elif menu_lateral == "Segmentación de Ventas":
-    st.markdown("## 📌 Segmentación de Ventas")
-    st.write("Análisis detallado de la segmentación de clientes y ventas.")
-    sub_option = st.sidebar.radio(
-        "Selecciona una subcategoría:",
-        ["Segmentación por comunidad autónoma", "Segmentación por marca", "Segmentación por potencia"]
-    )
-    if sub_option == "Segmentación por comunidad autónoma":
-        st.write("🌍 **Análisis de ventas por comunidad autónoma**")
-    elif sub_option == "Segmentación por marca":
-        st.write("🚗 **Análisis de ventas por marca**")
-    elif sub_option == "Segmentación por potencia":
-        st.write("🏎️ **Análisis de ventas por potencia**")
 
-# SOLO SE MUESTRA TENDENCIAS CUANDO SE SELECCIONA ESA OPCIÓN
-elif menu_lateral == "Tendencias del Mercado":
-    st.markdown("## 📈 Tendencias del Mercado")
-    st.write("Exploración de tendencias y patrones en el mercado automotriz.")
+        #MODELOS MÁS POPULARES
+        elif analisis_seleccionado == "Modelos más populares":
+            st.write("Este análisis muestra los modelos más frecuentes dentro de las marcas seleccionadas.")
+
+            conteo_modelos = df_filtrado["model"].value_counts().reset_index()
+            conteo_modelos.columns = ["Modelo", "Cantidad"]
+
+            # 📊 Gráfico de Barras de Modelos más Vendidos con Selección Múltiple
+            fig2 = px.bar(
+                conteo_modelos,
+                x="Modelo",
+                y="Cantidad",
+                title=f"Top Modelos más Populares",
+                labels={"Modelo": "Modelo", "Cantidad": "Cantidad de Vehículos"},
+                text_auto=True
+            )
+            fig2.update_layout(xaxis_tickangle=-45)
+            st.plotly_chart(fig2, key="modelos_populares")
+
+            st.markdown("""
+            Mediante este gráfico el cliente puede tener una idea de los modelos más populares en el mercado de segunda mano. Se podría evitar la adquisición de los modelos
+            más populares ya que podrían tener una mayor competencia en el mercado y por ende, una mayor dificultad para venderlos. Por otro lado, si se adquieren los modelos
+            menos populares podríamos tener una mayor facilidad para venderlos.""")
+
+            st.markdown("""
+            También nos puede servir para detectar tendencias de mercado, si un modelo en concreto está siendo muy demandado, podríamos adquirir más unidades de ese modelo para 
+            satisfacer la demanda.""")
+
+
+            st.markdown("""
+            <hr>
+            <p style="text-align: center; font-size: 14px; color: #7D6B5B; font-style: italic;">
+                <i>El presente informe ha sido elaborado en el margen de la relación contractual entre <b>Opticar</b> y <b>AutoMaster Select</b>,
+                con el propósito de proporcionar asesoramiento estratégico basado en el análisis de datos. Toda la información contenida en este
+                documento es confidencial y ha sido obtenida de fuentes de datos recopiladas mediante técnicas de web scraping. Su uso está estrictamente
+                limitado a los términos y condiciones acordados entre ambas partes.</i>
+            </p>
+        """, unsafe_allow_html=True)
+
+
+        # DEPRECIACIÓN DE PRECIO
+        elif analisis_seleccionado == "Depreciación de Precio":
+            st.markdown("## 📉 Relación entre Año de Fabricación y Precio")
+            st.write("Este gráfico analiza cómo varía el precio según el año de fabricación para las marcas seleccionadas.")
+
+            # Definir la columna de color según selección
+            if len(marcas_seleccionadas) == 1 and "Todas" not in marcas_seleccionadas:
+                color_columna = "model"  # Si es una sola marca, usar el modelo como color
+            else:
+                color_columna = "make"  # Si son varias marcas, usar la marca como color
+
+            # 📊 Scatter plot de depreciación con color dinámico
+            fig3 = px.scatter(
+                df_filtrado,
+                x="year_formato_fecha",
+                y="price",
+                color=color_columna,  # Color por marca o modelo según el caso
+                title="Depreciación de Precio por Año de Fabricación",
+                labels={"year_formato_fecha": "Año de Fabricación", "price": "Precio (€)"},
+                hover_data=["model", "kms"],
+                opacity=0.7
+            )
+            
+            fig3.update_xaxes(
+                tickformat="%Y",  # Mostrar solo el año en formato YYYY
+                dtick="M60",  # Espaciado de cada 5 años
+            )
+            
+            st.plotly_chart(fig3, key="scatter_precio_anio")
+
+            st.markdown("""
+            Gracias a este gráfico observamos que hay marcas que aguantan el precio a lo largo de los años, mientras que otras marcas presentan una mayor depreciación.
+            
+            Entre las marcas que aguantan más se encuentran ***Mercedes-Benz, BMW, Audi***. Marcas de lujo como ***Porsche, Ferrari, Aston-Martin, Bentley*** también mantienen su valor a lo largo del tiempo.
+            """)
+
+            st.markdown("""
+            Se podría hacer el análisis de segmentación por modelos de cada marca para ver qué modelos aguantan mejor el precio con los años, dependiendo de la clientela objetivo.
+            """)
+
+
+
+            st.markdown("""
+            <hr>
+            <p style="text-align: center; font-size: 14px; color: #7D6B5B; font-style: italic;">
+                <i>El presente informe ha sido elaborado en el margen de la relación contractual entre <b>Opticar</b> y <b>AutoMaster Select</b>,
+                con el propósito de proporcionar asesoramiento estratégico basado en el análisis de datos. Toda la información contenida en este
+                documento es confidencial y ha sido obtenida de fuentes de datos recopiladas mediante técnicas de web scraping. Su uso está estrictamente
+                limitado a los términos y condiciones acordados entre ambas partes.</i>
+            </p>
+        """, unsafe_allow_html=True)
+
+
+
+
+                
+#TAB 2
+    with tab2:
+        # 📌 Introducción
+        st.markdown("## 📉 Análisis de Depreciación por Marca")
+        st.write("""
+        Este análisis permite evaluar cómo varían los precios de los vehículos en función del tiempo, 
+        la marca y el kilometraje. Compararemos:
+        - **La dispersión de precios por marca** para identificar qué marcas mantienen mejor su valor.
+        - **La relación entre el año de fabricación y el precio** para ver tendencias de depreciación.
+        - **El impacto del kilometraje en el precio** para evaluar la influencia del uso en la valoración del vehículo.
+        """)
+
+        # Filtros interactivos
+        marcas_disponibles = df["make"].unique()
+        marca_seleccionada = st.selectbox("🔎 Selecciona una Marca:", ["Todas"] + list(marcas_disponibles))
+
+        # Filtrado de datos según selección
+        df_filtrado = df.copy()
+        if marca_seleccionada != "Todas":
+            df_filtrado = df[df["make"] == marca_seleccionada]
+
+        ### 📊 Gráfico 1: Boxplot de Precios por Marca
+        st.markdown("### 💰 Distribución de Precios por Marca")
+        fig_boxplot = px.box(
+            df_filtrado,
+            x="make",
+            y="price",
+            title="Distribución de Precios por Marca",
+            labels={"make": "Marca", "price": "Precio (€)"},
+            color="make"
+        )
+        fig_boxplot.update_layout(xaxis_title="Marca", yaxis_title="Precio (€)", xaxis_tickangle=-45)
+        st.plotly_chart(fig_boxplot)
+
+        ### 📊 Gráfico 2: Scatter Plot Precio vs. Año
+        st.markdown("### 🕒 Relación entre Año de Fabricación y Precio")
+        fig_scatter_año = px.scatter(
+            df_filtrado,
+            x="year",
+            y="price",
+            color="make",
+            title="Precio vs. Año de Fabricación",
+            labels={"year": "Año de Fabricación", "price": "Precio (€)"},
+            hover_data=["model", "kms"]
+        )
+        fig_scatter_año.update_layout(xaxis_title="Año de Fabricación", yaxis_title="Precio (€)")
+        st.plotly_chart(fig_scatter_año)
+
+        ### 📊 Gráfico 3: Scatter Plot Precio vs. Kilometraje
+        st.markdown("### 🚗 Relación entre Kilometraje y Precio")
+        fig_scatter_km = px.scatter(
+            df_filtrado,
+            x="kms",
+            y="price",
+            color="make",
+            title="Precio vs. Kilometraje",
+            labels={"kms": "Kilometraje (km)", "price": "Precio (€)"},
+            hover_data=["model", "year"]
+        )
+        fig_scatter_km.update_layout(xaxis_title="Kilometraje (km)", yaxis_title="Precio (€)")
+        st.plotly_chart(fig_scatter_km)
+
+        # Conclusiones
+        st.markdown("## 📌 Conclusiones")
+        st.write("""
+        - Algunas marcas conservan mejor su valor a lo largo de los años, mientras que otras presentan una mayor depreciación.
+        - El kilometraje influye directamente en el precio de los vehículos, pero en algunas marcas el efecto es menor.
+        - Este análisis permite definir estrategias de precio y segmentación según la marca y el estado del vehículo.
+        """)
+
+         
+
+
+
+
 
 # SOLO SE MUESTRA CONCLUSIONES CUANDO SE SELECCIONA ESA OPCIÓN
 elif menu_lateral == "Conclusiones":
@@ -274,7 +474,7 @@ elif menu_lateral =="Modelo predictivo":
     
     # Transmisión
     transmission_dict = {"manual": "Manual", "automatic": "Automático"}
-    transmission = st.selectbox("Selecciona el tipo de transmisión", [transmission_dict[t] for t in df["transmission"].unique()])
+    transmission = st.selectbox("Selecciona el tipo de transmisión", [transmission_dict[t] for t in df["shift"].unique()])
     # -----------------------------------------------------------------------------------------------------------------------------------------------------------
     #Inferencia del modelo
     if st.button("🔍 Predecir Precio del Vehículo"):
@@ -305,8 +505,8 @@ elif menu_lateral =="Modelo predictivo":
 
         body = str.encode(json.dumps(data))
 
-        url = '' 
-        api_key = ''  
+        url = 'http://c46f109b-f399-4a88-a0b5-70030985f904.eastus2.azurecontainer.io/score' 
+        api_key = 'uwwIMT6N69MOvr2GatGBtXMbwKPPOG1U'  
         if not api_key:
             st.error("⚠️ No se ha proporcionado una clave API válida.")
         else:
@@ -326,4 +526,3 @@ elif menu_lateral =="Modelo predictivo":
                 st.error(f"⚠️ La solicitud falló con código de estado: {error.code}")
                 st.text(error.info())
                 st.text(error.read().decode("utf8", 'ignore'))
-
