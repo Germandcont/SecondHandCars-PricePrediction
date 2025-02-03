@@ -505,8 +505,8 @@ elif menu_lateral =="Modelo predictivo":
 
         body = str.encode(json.dumps(data))
 
-        url = 'http://c46f109b-f399-4a88-a0b5-70030985f904.eastus2.azurecontainer.io/score' 
-        api_key = 'uwwIMT6N69MOvr2GatGBtXMbwKPPOG1U'  
+        url = '' 
+        api_key = ''  
         if not api_key:
             st.error("⚠️ No se ha proporcionado una clave API válida.")
         else:
