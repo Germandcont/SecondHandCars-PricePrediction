@@ -5,3 +5,5 @@ seaborn
 streamlit
 plotly
 Pillow
+folium
+streamlit_folium
