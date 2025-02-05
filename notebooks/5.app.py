@@ -30,7 +30,7 @@ st.set_page_config(page_title="Opticar - Soluciones Rentables", layout="wide")
 banner = Image.open("banner_opticar.jpg")
 
 # Mostrar el banner en la parte superior de la aplicación
-st.image(banner, use_column_width=True)
+st.image(banner, use_container_width=True)
 
 # Aplicar estilos personalizados al menú lateral
 st.markdown("""
@@ -58,7 +58,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Cargar la imagen en la barra lateral
-st.sidebar.image("opticar_logo.jpeg", use_column_width=True)
+st.sidebar.image("opticar_logo.jpeg", use_container_width=True)
 # Configuración del menú lateral
 menu_lateral = st.sidebar.radio("Selecciona una opción:", 
     ["Introducción", "Visión General", "Tendencia de mercado","Modelo predictivo","Panel de control | PowerBI","Conclusiones"]
