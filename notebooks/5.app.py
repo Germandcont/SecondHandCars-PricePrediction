@@ -121,7 +121,7 @@ if menu_lateral == "Introducción":
 
 # VISIÓN GENERAL DE LOS DATOS
 elif menu_lateral == "Visión General":
-    st.markdown('<h2 style="color: #A1753F; font-weight: bold; font-family: Cambria;">📊 Visión General</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 style="color: #A1753F; font-weight: bold; font-family: Cambria;"> Visión General</h2>', unsafe_allow_html=True)
 
 
     st.write("Para poder entregar una asesoría de calidad hemos analizado coches en venta de segunda mano provenientes de toda España.")
@@ -147,7 +147,7 @@ elif menu_lateral == "Visión General":
     # Mostrar el mapa en Streamlit
     st.plotly_chart(fig)
 
-
+    st.markdown("### <b style='color:#AF6926'>Algunos datos</b>", unsafe_allow_html=True)
 
 
     if menu_lateral == 'Visión General':
@@ -230,7 +230,7 @@ elif menu_lateral == "Visión General":
         """, unsafe_allow_html=True)
 # TENDENCIA DE MERCADO
 elif menu_lateral == "Tendencia de mercado":
-    st.markdown('<h2 style="color: #A1753F; font-weight: bold; font-family: Cambria;">📈 Tendencia de Mercado</h2>', unsafe_allow_html=True)
+    st.markdown('<h2 style="color: #A1753F; font-weight: bold; font-family: Cambria;">Tendencia de Mercado</h2>', unsafe_allow_html=True)
 
     st.write("En esta sección se analizarán los precios del mercado de vehículos de coches de segunda mano en cuanto a diferentes características como la marca, la zona geográfica, potencia, kilometraje, etc.")
     #tabs 
@@ -238,13 +238,13 @@ elif menu_lateral == "Tendencia de mercado":
 #TAB 1
     with tab1:
 
-        st.write("En este apartado se realiza un análisis de las marcas de coches más vendidas en el mercado de segunda mano.")
+        
         analisis_seleccionado = st.radio("Selecciona el análisis:",["Precio medio y rango de precios", "Modelos más populares", "Depreciación de precio"])
 
         # Selección Múltiple de Marcas
         marcas_disponibles = list(df["make"].unique())
         marcas_seleccionadas = st.multiselect(
-            "🔎 Filtrar por marca:",
+            "Filtrar por marca:",
             ["Todas"] + marcas_disponibles,
             default=["Todas"]
         )
@@ -390,8 +390,6 @@ elif menu_lateral == "Tendencia de mercado":
             </p>
         """, unsafe_allow_html=True)
     with tab2:
-        # Analisis por potencia 
-        st.markdown("## <b style='color:#A1753F; font-family: Cambria;'>📊 Análisis por potencia</b>", unsafe_allow_html=True)
 
         # Filtro de marca
         marcas_disponibles = df['make'].unique()
@@ -602,7 +600,7 @@ elif menu_lateral == "Tendencia de mercado":
     #TAB 4
     with tab4:
         # 📌 Introducción
-        st.write("En este apartado se analiza la distribución geográfica de los vehículos de segunda mano en venta.")
+        
         analisis_seleccionado = st.radio("Selecciona el análisis:", [
             "Distribución de las marcas según la comunidad autónoma",
             "Relación de los precios por comunidad autónoma",
@@ -855,14 +853,14 @@ elif menu_lateral =="Modelo predictivo":
     with tab2: 
 
         #  Power Bi
-        st.markdown("## 📊 PowerBI Variables modelo")
+        st.markdown("## PowerBI Variables modelo")
     
 
     with tab3:
 
         #Variables de entrada para el modelo predictivo
         # -----------------------------------------------------------------------------------------------------------------------------------------------------------
-        st.markdown("## <b style='color:#A1753F; font-family: Cambria;'>📊 Modelo predictivo</b>", unsafe_allow_html=True)
+        st.markdown("## <b style='color:#A1753F; font-family: Cambria;'> Modelo predictivo</b>", unsafe_allow_html=True)
 
         #Para que la marca sea correlativa con el modelo a la hora de introducir el input en la aplicación, crearemos un diccionario en el que para cada marca
         #introduzcamos los modelos que tiene. De esta forma, cuando el usuario introduzca una marca, podrá seleccionar el modelo correspondiente.
@@ -957,8 +955,17 @@ elif menu_lateral =="Modelo predictivo":
 
 # SOLO SE MUESTRA CONCLUSIONES CUANDO SE SELECCIONA ESA OPCIÓN
 elif menu_lateral == "Conclusiones":
-    st.markdown("## ✅ Conclusiones")
-    st.write("Puntos clave y recomendaciones estratégicas.")
+    st.markdown("## <b style='color:#A1753F; font-family: Cambria;'>Conclusiones</b>", unsafe_allow_html=True)
+    st.markdown("""
+            - Evitar la venta de Citroën, Renault y Opel debido a la saturación del mercado.
+            - Priorizar la venta de coches con menos de 100.000 km, ya que se devalúan menos.
+            - Enfocarse en la venta de coches con menos de 10 años de antigüedad para minimizar la devaluación.
+            - Los concesionarios en Madrid, Andalucía y Cataluña deberían adquirir coches de precio más elevado debido a la mayor demanda en estas regiones.
+            - No adquirir coches con más de 180.000 km, ya que la devaluación del precio es mucho más pronunciada.
+            - Aconsejamos comprar coches de gasolina posteriores a 2001 y de diésel posteriores a 2006, en línea con la normativa de etiquetas medioambientales. La venta de coches diésel sigue siendo el mercado más extendido.
+                """)
+
+
     st.markdown("""
     <hr>
     <p style="text-align: center; font-size: 14px; color: #7D6B5B; font-style: italic;">
