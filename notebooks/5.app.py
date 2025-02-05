@@ -812,7 +812,7 @@ elif menu_lateral =="Modelo predictivo":
         st.markdown("### Transformación de variables")
         st.write("Los datos originales contienen tanto variables **categóricas** como **numéricas**, por lo que es necesario aplicar diferentes técnicas de preprocesamiento antes de entrenar el modelo. Esta foto sacada de Azure ML Studio resume el pipeline de transformación de variables aplicado:")
         #Insertamos la imagen referente al pipeline de transformación de variables pipeline_transformacion.png
-        st.image("pipeline_transformación_modelo.png", use_column_width=True)
+        st.image("pipeline_transformación_modelo.png", use_container_width=True)
         st.markdown("""
         
 
