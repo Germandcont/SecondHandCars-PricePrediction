@@ -58,7 +58,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Cargar la imagen en la barra lateral
-st.sidebar.image("opticar_logo.jpeg", use_container_width=True)
+st.sidebar.image("opticar_logo.jpeg", use_column_width=True)
 # Configuración del menú lateral
 menu_lateral = st.sidebar.radio("Selecciona una opción:", 
     ["Introducción", "Visión General", "Tendencia de mercado","Modelo predictivo","Panel de control | PowerBI","Conclusiones"]
