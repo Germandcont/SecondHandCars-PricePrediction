@@ -7,3 +7,4 @@ plotly
 Pillow
 folium
 streamlit_folium
+sklearn.preprocessing
