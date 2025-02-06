@@ -47,8 +47,7 @@ Developed a **machine learning model** to estimate vehicle prices based on histo
 
 📌 Note: Although we designed and executed the data processing pipeline in Azure ML, all these steps were also developed and tested in Python using libraries such as pandas, scikit-learn, and numpy. This allowed us to validate the results and ensure consistency in preprocessing before integrating it into Azure ML.
 
-![image](https://github.com/user-attachments/assets/f16f84ee-7aa9-43a9-9dcd-2e94e8564302)
-
+![image](https://github.com/user-attachments/assets/853f1ce2-ba0d-4a81-9c26-b375682beb2d)
 
 
 ### 4️ Power BI Dashboard
