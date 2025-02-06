@@ -32,12 +32,21 @@ Identified key insights and pricing patterns using:
 ### 3️ Predictive Pricing Model (Azure ML Automated)
 Developed a **machine learning model** to estimate vehicle prices based on historical market data.
 
-#### 🔹 Steps in Model Development:
-- **Upload data asset** in Azure ML Studio.
-- **Feature transformation:**
+#### 🔹 Model Development Pipeline: 
+- **Upload Data Asset** in Azure ML Studio.
+- **Selecting Columns**
+- **Clean Missing Data**
+- **Normalize Data and Feature Transformation**
   - **OneHotEncoder:** Applied to car brands, converting categorical values into binary representation (resulting in 500 columns).
   - **LabelEncoder:** Used for fuel type and transmission. Assigned unique values (e.g., `1` for **manual**, `2` for **automatic**).
   - **CharGramCountVectorizer:** Split brand names into small character fragments (n-grams) to capture internal patterns.
+- **Split Data (Train, Test)**
+- **Selecting Regressor**
+- **Evaluate Model**
+
+![image](https://github.com/user-attachments/assets/f16f84ee-7aa9-43a9-9dcd-2e94e8564302)
+
+
 
 ### 4️ Power BI Dashboard
 Designed interactive **visualizations** to support strategic decision-making.
