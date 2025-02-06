@@ -48,6 +48,12 @@ Developed a **machine learning model** to estimate vehicle prices based on histo
 📌 Note: Although we designed and executed the data processing pipeline in Azure ML, all these steps were also developed and tested in Python using libraries such as pandas, scikit-learn, and numpy. This allowed us to validate the results and ensure consistency in preprocessing before integrating it into Azure ML.
 
 ![image](https://github.com/user-attachments/assets/853f1ce2-ba0d-4a81-9c26-b375682beb2d)
+### Model Performance Metrics: 
+- R² Score: 0.95212 ➝ This is the key metric, as it shows that the model explains 95.21% of the variability in car prices. Therefore, we can affirm that the model has high predictive power and accurately captures the relationship between the variables and the car price.
+
+- MAE (Mean Absolute Error): 1679.7 ➝ On average, the model makes an error of approximately €1679 in its predictions.
+
+- RMSE (Root Mean Squared Error): 3754.7 ➝ This indicates that the prediction errors have an average magnitude of approximately €3754. Our dataset includes both mid-range cars and luxury vehicles with very high prices. This creates significant variability in the data, which may explain why RMSE is significantly higher than MAE. In particular, high-value cars tend to have larger prediction errors, which impact RMSE more.
 
 
 ### 4️ Power BI Dashboard
