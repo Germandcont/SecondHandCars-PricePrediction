@@ -710,9 +710,9 @@ elif menu_lateral == "Tendencia de mercado":
                     location=[row['lat'], row['lon']],
                     radius=row['counts'] / 100,
                     popup=f"{row['state']}: {row['counts']} anuncios",
-                    color='blue',
+                    color='#A1753F',
                     fill=True,
-                    fill_color='blue'
+                    fill_color='#A1753F'
                 ).add_to(m)
             folium_static(m)
 
