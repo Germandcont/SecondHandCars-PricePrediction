@@ -464,8 +464,7 @@ elif menu_lateral == "Tendencia de mercado":
                     color_discrete_sequence=['#AF6926']
                 )
                 st.plotly_chart(fig_avg_price_power_segment)
-                st.markdown("""
-                El <span style='color:#A1753F'>**precio**</span> promedio de los vehículos <span style='color:#A1753F'>**aumenta progresivamente con la potencia**</span>, alcanzando su máximo en la categoría de más de 400 CV.""")
+                st.markdown("El **precio** promedio de los vehículos **aumenta progresivamente con la potencia**, alcanzando su máximo en la categoría de más de 400 CV.")
                 st.markdown("""
                 <hr>
                 <p style="text-align: center; font-size: 14px; color: #7D6B5B; font-style: italic;">
