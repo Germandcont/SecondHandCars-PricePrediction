@@ -18,6 +18,7 @@ Additionally, we conducted **data extraction, preprocessing, exploratory analysi
 
 ### 1️ ETL & Data Preprocessing
 - Cleaned and transformed raw data for accurate analysis.
+- Most of the steps in "Model Development Pipeline" where also tested in this process using Python.
 
 ### 2️ Exploratory Data Analysis (EDA)
 Identified key insights and pricing patterns using:
@@ -44,6 +45,8 @@ Developed a **machine learning model** to estimate vehicle prices based on histo
 - **Selecting Regressor**
 - **Evaluate Model**
 
+📌 Note: Although we designed and executed the data processing pipeline in Azure ML, all these steps were also developed and tested in Python using libraries such as pandas, scikit-learn, and numpy. This allowed us to validate the results and ensure consistency in preprocessing before integrating it into Azure ML.
+
 ![image](https://github.com/user-attachments/assets/f16f84ee-7aa9-43a9-9dcd-2e94e8564302)
 
 
@@ -53,7 +56,8 @@ Designed interactive **visualizations** to support strategic decision-making.
 📌 **(Dashboard included in Streamlit App)**
 
 ### 5️ Streamlit App (Final Report)
-Developed an interactive web application using **Streamlit**, integrating Power BI for visual insights.
+Developed an interactive web application using **Streamlit**, integrating Power BI for visual insights. <br/>
+***Deploy URL***: https://secondhandcars-priceprediction-6unveathrc59ywyzqcrhz9.streamlit.app/
 
 ---
 
