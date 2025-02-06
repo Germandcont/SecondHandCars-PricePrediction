@@ -29,8 +29,6 @@ st.set_page_config(page_title="Opticar - Soluciones Rentables", layout="wide")
 # Cargar el banner desde la carpeta del proyecto
 banner = Image.open("banner_opticar.jpg")
 
-# Mostrar el banner en la parte superior de la aplicación
-st.image(banner, use_container_width=True)
 
 # Aplicar estilos personalizados al menú lateral
 st.markdown("""
@@ -66,6 +64,9 @@ menu_lateral = st.sidebar.radio("Selecciona una opción:",
 
 # SOLO SE MUESTRA LA INTRODUCCIÓN CUANDO SE SELECCIONA "Introducción"
 if menu_lateral == "Introducción":
+
+    # Mostrar el banner en la parte superior de la aplicación
+    st.image(banner, use_container_width=True)
 
     st.markdown('<h1 style="color: #A1753F; font-family: Cambria; font-weight: bold; text-align: center;">DATA-DRIVEN CONFIDENCE ON EVERY RIDE</h1>', unsafe_allow_html=True)
     st.markdown('<h3 style="color: #A1753F; font-family: Cambria;">Nuestro objetivo</h3>', unsafe_allow_html=True)
