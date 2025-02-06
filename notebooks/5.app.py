@@ -30,7 +30,7 @@ st.set_page_config(page_title="Opticar - Soluciones Rentables", layout="wide")
 banner = Image.open("banner_opticar.jpg")
 
 # Mostrar el banner en la parte superior de la aplicación
-st.image(banner, use_conainer_width=True)
+st.image(banner, use_container_width=True)
 
 # Aplicar estilos personalizados al menú lateral
 st.markdown("""
@@ -58,7 +58,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Cargar la imagen en la barra lateral
-st.sidebar.image("opticar_logo.jpeg", use_conainer_width=True)
+st.sidebar.image("opticar_logo.jpeg", use_container_width=True)
 # Configuración del menú lateral
 menu_lateral = st.sidebar.radio("Selecciona una opción:", 
     ["Introducción", "Visión General", "Tendencia de mercado","Modelo predictivo","Panel de control | PowerBI","Conclusiones"]
@@ -810,7 +810,7 @@ elif menu_lateral =="Modelo predictivo":
         st.markdown("### Transformación de variables")
         st.write("Los datos originales contienen tanto variables **categóricas** como **numéricas**, por lo que es necesario aplicar diferentes técnicas de preprocesamiento antes de entrenar el modelo. Esta foto sacada de Azure ML Studio resume el pipeline de transformación de variables aplicado:")
         #Insertamos la imagen referente al pipeline de transformación de variables pipeline_transformacion.png
-        st.image("pipeline_transformación_modelo.png", use_conainer_width=True)
+        st.image("pipeline_transformación_modelo.png", use_container_width=True)
         st.markdown("""
         
 
