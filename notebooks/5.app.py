@@ -30,7 +30,7 @@ st.set_page_config(page_title="Opticar - Soluciones Rentables", layout="wide")
 banner = Image.open("banner_opticar.jpg")
 
 # Mostrar el banner en la parte superior de la aplicación
-st.image(banner, use_container_width=True)
+st.image(banner, use_conainer_width=True)
 
 # Aplicar estilos personalizados al menú lateral
 st.markdown("""
@@ -58,7 +58,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Cargar la imagen en la barra lateral
-st.sidebar.image("opticar_logo.jpeg", use_container_width=True)
+st.sidebar.image("opticar_logo.jpeg", use_conainer_width=True)
 # Configuración del menú lateral
 menu_lateral = st.sidebar.radio("Selecciona una opción:", 
     ["Introducción", "Visión General", "Tendencia de mercado","Modelo predictivo","Panel de control | PowerBI","Conclusiones"]
@@ -775,7 +775,7 @@ elif menu_lateral =="Modelo predictivo":
     
 
     #Vamos a crear tabs con 3 opciones, Correlación Variables, PowerBI Variables modelo y Herraienta de Predicción
-    tab1, tab2, tab3 = st.tabs(['Desarrollo del Modelo',"PowerBI Variables modelo", 'Herramienta de Predicción'])
+    tab1, tab2 = st.tabs(['Desarrollo del Modelo', 'Herramienta de Predicción'])
 
     #TAB 1
     with tab1:
@@ -810,7 +810,7 @@ elif menu_lateral =="Modelo predictivo":
         st.markdown("### Transformación de variables")
         st.write("Los datos originales contienen tanto variables **categóricas** como **numéricas**, por lo que es necesario aplicar diferentes técnicas de preprocesamiento antes de entrenar el modelo. Esta foto sacada de Azure ML Studio resume el pipeline de transformación de variables aplicado:")
         #Insertamos la imagen referente al pipeline de transformación de variables pipeline_transformacion.png
-        st.image("pipeline_transformación_modelo.png", use_container_width=True)
+        st.image("pipeline_transformación_modelo.png", use_conainer_width=True)
         st.markdown("""
         
 
@@ -834,7 +834,7 @@ elif menu_lateral =="Modelo predictivo":
         ---
 
         ### <b style='color:#A1753F; font-family: Cambria;'>Manejo de Variables Numéricas</b>
-        Para las variables numéricas que incluyen: **Año de fabricación**, **Kilometraje**, **Potencia del motor**, se han utilizado las siguientes técnicas:
+        Para las variables numéricas que incluyen: **Kilometraje**, **Potencia del motor**, se han utilizado las siguientes técnicas:
 
         #### **Imputación de Media (MeanImputer)**
         - Los valores faltantes en variables numéricas se reemplazan por la media de la columna.
@@ -842,21 +842,16 @@ elif menu_lateral =="Modelo predictivo":
         ---
 
         ### <b style='color:#A1753F; font-family: Cambria;'>Resultados Modelo</b>
-        Tras el preprocesamiento, los datos se introducen en un modelo de **VotingEnsemble**, que combina múltiples modelos base para mejorar la precisión de las predicciones. En este caso, el ensamble incluye un <span style="color: #AF6926;">XGBRegressor</span>, un modelo basado en gradient boosting, que es especialmente eficaz para capturar patrones complejos en los datos y manejar valores atípicos. La combinación de estos modelos permite reducir el sesgo y la varianza, logrando predicciones más estables y precisas.
+        Tras el preprocesamiento, los datos se introducen en un Voting Ensemble, que combina múltiples modelos para mejorar la precisión. En este caso, incluye un XGBRegressor, un modelo de gradient boosting eficaz en la detección de patrones complejos y el manejo de valores atípicos. Esta combinación reduce la varianza, logrando predicciones más estables y precisas.
 
         ##### Métricas de Evaluación  
         - <span style="color: #AF6926; font-family: Cambria;"><b>R2 Score</b></span>: 0.95212 ➝ Es la métrica clave, ya que muestra que el modelo explica el **95.21%** de la variabilidad de los precios de los coches. Por lo tanto podemos afirmar que el modelo tiene una alta capacidad predictiva y captura con precisión la relación entre las variables y el precio del coche.
-        - <span style="color: #AF6926; font-family: Cambria;"><b>MAE</b></span>: 1679.7 ➝ En promedio, el modelo comete un error de aproximadamente 1679.7 euros en sus predicciones.
-        - <span style="color: #AF6926; font-family: Cambria;"><b>RMSE</b></span>: 3754.7 ➝ Refleja que los errores en la predicción son relativamente bajos en comparación con el rango de precios.
-        
+        - <span style="color: #AF6926; font-family: Cambria;"><b>MAE</b></span> (Error Absoluto Medio): 1679.7 ➝ En promedio, el modelo comete un error de aproximadamente 1679€ en sus predicciones.  
+        - <span style="color: #AF6926; font-family: Cambria;"><b>RMSE</b></span> (Raíz del Error Cuadrático Medio): 3754.7 ➝ Refleja que los errores en la predicción tienen una magnitud promedio de aproximadamente 3754€. Nuestro dataset incluye tanto coches de gama media como vehículos de lujo con precios muy elevados. Esto genera una gran variabilidad en los datos y puede explicar por qué el RMSE es significativamente mayor que el MAE. En particular, los coches de alto valor pueden tener errores de predicción más grandes, lo que impacta más el RMSE.
         """, unsafe_allow_html=True)
-    with tab2: 
-
-        #  Power Bi
-        st.markdown("## PowerBI Variables modelo")
     
 
-    with tab3:
+    with tab2:
 
         #Variables de entrada para el modelo predictivo
         # -----------------------------------------------------------------------------------------------------------------------------------------------------------
