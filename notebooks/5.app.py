@@ -949,7 +949,7 @@ elif menu_lateral =="Modelo predictivo":
     """, unsafe_allow_html=True)
 
 # SOLO SE MUESTRA CONCLUSIONES CUANDO SE SELECCIONA ESA OPCIÓN
-elif menu_lateral == "Conclusiones Generales":
+elif menu_lateral == "Conclusiones":
     st.markdown("## <b style='color:#A1753F; font-family: Cambria;'>Conclusiones</b>", unsafe_allow_html=True)
     st.markdown("""
             - Dominio del diésel: A pesar de las restricciones medioambientales en algunas ciudades, los coches diésel siguen siendo los más vendidos en el mercado de segunda mano debido a su durabilidad y menor consumo en trayectos largos
@@ -959,7 +959,8 @@ elif menu_lateral == "Conclusiones Generales":
 
             Estas recomendaciones son generales y pueden variar según las necesidades y preferencias de cada comprador.     
             Si deseas obtener más información de forma detallada, te recomendamos acceder al panel de control interactivo de PowerBI, donde podrás explorar los datos y visualizaciones de forma más interactiva.
-            """, unsafe_allow_html=True)
+            
+                """, unsafe_allow_html=True)
 
 
     st.markdown("""
