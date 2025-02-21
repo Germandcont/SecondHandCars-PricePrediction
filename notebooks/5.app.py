@@ -952,11 +952,11 @@ elif menu_lateral =="Modelo predictivo":
 elif menu_lateral == "Conclusiones":
     st.markdown("## <b style='color:#A1753F; font-family: Cambria;'>Conclusiones</b>", unsafe_allow_html=True)
     st.markdown("""
-            - Enfocarse en la venta de coches con menos de 10 años de antigüedad para minimizar la devaluación.
-            - Los concesionarios en Madrid, Andalucía y Cataluña deberían adquirir coches de precio más elevado debido a la mayor demanda en estas regiones.
-            - No adquirir coches con más de 180.000 km, ya que la devaluación del precio es mucho más pronunciada.
-            - Aconsejamos comprar coches de gasolina posteriores a 2001 y de diésel posteriores a 2006, en línea con la normativa de etiquetas medioambientales. La venta de coches diésel sigue siendo el mercado más extendido.
-                """)
+            - Dominio del diésel: A pesar de las restricciones medioambientales en algunas ciudades, los coches diésel siguen siendo los más vendidos en el mercado de segunda mano debido a su durabilidad y menor consumo en trayectos largos
+            - Creciente interés por los híbridos y eléctricos: Aunque su volumen aún es menor, cada vez más compradores buscan opciones más sostenibles, especialmente en las grandes ciudades.
+            - Relevancia del kilometraje y mantenimiento: Los compradores priorizan vehículos con menor kilometraje y buen historial de mantenimiento, lo que incrementa el valor de coches bien conservados.
+            - Aconsejamos comprar coches de gasolina posteriores a 2001 y de diésel posteriores a 2006, en línea con la normativa de etiquetas medioambientales, ya que suelen recibir la etiqueda de tipo B de la DGT, permitiendo su cirulación en la mayoría de laz zonas. Sin embargo, para una mejor inversión a futuro, recomienda buscar coches de etiqueta tipo C o superior.
+                 """)
 
 
     st.markdown("""
