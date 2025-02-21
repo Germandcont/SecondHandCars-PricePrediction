@@ -129,7 +129,6 @@ elif menu_lateral == "Visión General":
 
 
 
-    # Crear un mapa con Plotly Express
     fig = px.scatter_mapbox(
         df, 
         lat="lat", 
@@ -141,11 +140,9 @@ elif menu_lateral == "Visión General":
         height=600
     )
 
-    # Configurar el estilo del mapa
     fig.update_layout(mapbox_style="open-street-map")
     fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 
-    # Mostrar el mapa en Streamlit
     st.plotly_chart(fig)
 
     st.markdown("### <b style='color:#AF6926'>Algunos datos</b>", unsafe_allow_html=True)
@@ -191,12 +188,11 @@ elif menu_lateral == "Visión General":
 
 #TAB 3  
         with tab3:
-            # Crear segmentos de kilometraje
+
             bins = [0, 50000, 100000, 150000, 200000, np.inf]
             labels = ['Bajo (0-50k)', 'Medio (50k-100k)', 'Medio Alto (100k-150k)', 'Alto (150k-200k)', 'Muy Alto (>200k)']
             df['kms_segment'] = pd.cut(df['kms'], bins=bins, labels=labels, right=False)
 
-            # Contar la cantidad de coches en cada segmento
             kms_segment_counts = df['kms_segment'].value_counts().sort_index()
 
             # Crear gráfico de barras
@@ -206,12 +202,10 @@ elif menu_lateral == "Visión General":
                 color_discrete_sequence=['#AF6926'])
             st.plotly_chart(fig_kms_segment)
 
-            # Crear segmentos de potencia
             bins = [0, 100, 200, 300, 400, np.inf]
             labels = ['Baja (0-100 CV)', 'Media (100-200 CV)', 'Alta (200-300 CV)', 'Muy Alta (300-400 CV)', 'Extrema (>400 CV)']
             df['power_segment'] = pd.cut(df['power'], bins=bins, labels=labels, right=False)
 
-            # Contar la cantidad de coches en cada segmento
             power_segment_counts = df['power_segment'].value_counts().sort_index()
 
             # Crear gráfico de barras
@@ -250,7 +244,6 @@ elif menu_lateral == "Tendencia de mercado":
             default=["Todas"]
         )
 
-        #Filtrar DataFrame según la selección múltiple
         if "Todas" in marcas_seleccionadas:
             df_filtrado = df  # Mostrar todas las marcas
         else:
@@ -392,22 +385,18 @@ elif menu_lateral == "Tendencia de mercado":
         """, unsafe_allow_html=True)
     with tab2:
 
-        # Filtro de marca
         marcas_disponibles = df['make'].unique()
         marca_seleccionada = st.selectbox("Selecciona una marca:", ["Todas"] + list(marcas_disponibles))
 
-        # Filtrar DataFrame según la selección de marca
         if marca_seleccionada != "Todas":
             df_filtrado = df[df['make'] == marca_seleccionada]
         else:
             df_filtrado = df
 
-        # Crear segmentos de potencia
         bins = [0, 100, 200, 300, 400, np.inf]
         labels = ['Baja (0-100 CV)', 'Media (100-200 CV)', 'Alta (200-300 CV)', 'Muy Alta (300-400 CV)', 'Extrema (>400 CV)']
         df_filtrado['power_segment'] = pd.cut(df_filtrado['power'], bins=bins, labels=labels, right=False)
 
-        # Contar la cantidad de coches en cada segmento
         power_segment_counts = df_filtrado['power_segment'].value_counts().sort_index()
 
         # Calcular el precio promedio por segmento de potencia
@@ -430,7 +419,7 @@ elif menu_lateral == "Tendencia de mercado":
                                             ["Cantidad de coches por segmento", "Precio promedio por segmento"], horizontal=True)
 
             if cantidad_o_precio == "Cantidad de coches por segmento":
-                # Crear gráfico de barras para la cantidad de coches en cada segmento
+
                 fig_power_segment = px.bar(
                     power_segment_counts, 
                     x=power_segment_counts.index, 
@@ -455,7 +444,7 @@ elif menu_lateral == "Tendencia de mercado":
             """, unsafe_allow_html=True)
 
             elif cantidad_o_precio == "Precio promedio por segmento":
-                # Crear gráfico de barras para el precio promedio por segmento de potencia
+
                 fig_avg_price_power_segment = px.bar(
                     avg_price_power_segment, 
                     x='power_segment', 
@@ -485,11 +474,11 @@ elif menu_lateral == "Tendencia de mercado":
             hb = ax.hexbin(df['power'], df['price'], gridsize=50, cmap='Oranges', mincnt=1, edgecolors='#AF6926')
             ax.set_xlabel('Potencia (CV)')
             ax.set_ylabel('Price (€)')
-            ax.set_ylim(0, 50000)  # Establecer límite superior para el precio
-            ax.set_xlim(0, 200)  # Establecer límite superior para la potencia
+            ax.set_ylim(0, 50000)  
+            ax.set_xlim(0, 200)  
             cb = fig.colorbar(hb, ax=ax)
             cb.set_label('Cantidad')
-            ax.set_facecolor('white')  # Quitar el fondo
+            ax.set_facecolor('white')
 
             plt.tight_layout()
             st.pyplot(fig)
@@ -515,14 +504,12 @@ elif menu_lateral == "Tendencia de mercado":
 
             if analisis_kms == "Cantidad de coches por kilometraje":
 
-                # Crear segmentos de kilometraje
                 bins = [0, 50000, 100000, 150000, 200000, np.inf]
                 labels = ['Bajo (0-50k)', 'Medio (50k-100k)', 'Medio Alto (100k-150k)', 'Alto (150k-200k)', 'Muy Alto (>200k)']
                 df_filtrado['kms_segment'] = pd.cut(df_filtrado['kms'], bins=bins, labels=labels, right=False)
 
-                # Contar la cantidad de coches en cada segmento
                 kms_segment_counts = df_filtrado['kms_segment'].value_counts().sort_index()
-                # Crear gráfico de barras
+
                 fig_kms_segment = px.bar(kms_segment_counts, x=kms_segment_counts.index, y=kms_segment_counts.values, 
                 labels={'kms_segment': 'Rangos de kilometraje', 'y': 'Cantidad'}, 
                 title="<b style='color:#A1753F; font-family: Cambria;'>Distribución de coches por segmento de kilometraje</b>", 
@@ -541,7 +528,7 @@ elif menu_lateral == "Tendencia de mercado":
             elif analisis_kms == "Relación Kilometraje - Precio":
 
                 df['kms_classification'] = pd.cut(df['kms'], bins=[0, 10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000, 110000, 120000, 130000, 140000, 150000, 160000, 170000, 180000, 190000, 200000, 210000, 220000, 230000, 240000, 250000, 260000, 270000, 280000, 290000, 300000, 310000, 320000, 330000, 340000, 350000, 360000, 370000, 380000, 390000, 400000, np.inf], labels=['0-10k', '10k-20k', '20k-30k', '30k-40k', '40k-50k', '50k-60k', '60k-70k', '70k-80k', '80k-90k', '90k-100k', '100k-110k', '110k-120k', '120k-130k', '130k-140k', '140k-150k', '150k-160k', '160k-170k', '170k-180k', '180k-190k', '190k-200k', '200k-210k', '210k-220k', '220k-230k', '230k-240k', '240k-250k', '250k-260k', '260k-270k', '270k-280k', '280k-290k', '290k-300k', '300k-310k', '310k-320k', '320k-330k', '330k-340k', '340k-350k', '350k-360k', '360k-370k', '370k-380k', '380k-390k', '390k-400k', '400k+'])
-                # Crear el gráfico de líneas con la media de precio
+
                 plt.figure(figsize=(20, 10))
                 mean_price_by_kms = df.groupby('kms_classification')['price'].mean()
                 mean_price_by_kms.plot(kind='line', marker='o', color='#AF6926')
@@ -568,14 +555,13 @@ elif menu_lateral == "Tendencia de mercado":
                 
 
             elif analisis_kms == "Relación Kilometraje - Tipo de transmisión":
-                # Crear segmentos de kilometraje
+
                 bins = [0, 50000, 100000, 150000, 200000, np.inf]
                 labels = ['Bajo (0-50k)', 'Medio (50k-100k)', 'Medio Alto (100k-150k)', 'Alto (150k-200k)', 'Muy Alto (>200k)']
                 df['kms_segment'] = pd.cut(df['kms'], bins=bins, labels=labels, right=False)
 
-                # Calcular el precio promedio por segmento de kilometraje y tipo de transmisión
                 avg_price_kms_transmission = df.groupby(['kms_segment', 'shift'])['price'].mean().reset_index()
-                # Crear gráfico de barras
+
                 fig_avg_price_kms_transmission = px.bar(avg_price_kms_transmission, x='kms_segment', y='price', color='shift', 
                     labels={'kms_segment': 'Rangos de kilometraje', 'price': 'Precio promedio (€)', 'shift': 'Transmisión'}, 
                     title="<b style='color:#A1753F; font-family: Cambria;'>Precio promedio por segmento de kilometraje y tipo de transmisión</b>", 
@@ -774,7 +760,6 @@ elif menu_lateral =="Modelo predictivo":
     st.markdown("Este modelo predictivo tiene como objetivo estimar el precio de un vehículo en función de diversas características como **marca, modelo, tipo de combustible, año de fabricación, kilometraje, potencia del motor y tipo de transmisión**. Para ello, se ha aplicado un pipeline de preprocesamiento que transforma las variables categóricas y numéricas antes de alimentar un modelo de regresión.")    
     
 
-    #Vamos a crear tabs con 3 opciones, Correlación Variables, PowerBI Variables modelo y Herraienta de Predicción
     tab1, tab2 = st.tabs(['Desarrollo del Modelo', 'Herramienta de Predicción'])
 
     #TAB 1
@@ -782,8 +767,7 @@ elif menu_lateral =="Modelo predictivo":
 
         from sklearn.preprocessing import LabelEncoder
 
-    #Hacemos un label encoder de shift y fuel 
-        # Crear una copia del dataframe original para no modificarlo directamente
+        # Creamos una copia del dataframe original para no modificarlo directamente
         df_encoded = df.copy()
 
     # Inicializar el LabelEncoder
@@ -896,7 +880,7 @@ elif menu_lateral =="Modelo predictivo":
                     ssl._create_default_https_context = ssl._create_unverified_context
 
 
-            allowSelfSignedHttps(True)  # Habilita certificados auto-firmados si es necesario
+            allowSelfSignedHttps(True) 
 
             # Datos en el formato requerido por la API
             data = {
