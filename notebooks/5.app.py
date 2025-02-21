@@ -949,14 +949,17 @@ elif menu_lateral =="Modelo predictivo":
     """, unsafe_allow_html=True)
 
 # SOLO SE MUESTRA CONCLUSIONES CUANDO SE SELECCIONA ESA OPCIÓN
-elif menu_lateral == "Conclusiones":
+elif menu_lateral == "Conclusiones Generales":
     st.markdown("## <b style='color:#A1753F; font-family: Cambria;'>Conclusiones</b>", unsafe_allow_html=True)
     st.markdown("""
             - Dominio del diésel: A pesar de las restricciones medioambientales en algunas ciudades, los coches diésel siguen siendo los más vendidos en el mercado de segunda mano debido a su durabilidad y menor consumo en trayectos largos
             - Creciente interés por los híbridos y eléctricos: Aunque su volumen aún es menor, cada vez más compradores buscan opciones más sostenibles, especialmente en las grandes ciudades.
             - Relevancia del kilometraje y mantenimiento: Los compradores priorizan vehículos con menor kilometraje y buen historial de mantenimiento, lo que incrementa el valor de coches bien conservados.
             - Aconsejamos comprar coches de gasolina posteriores a 2001 y de diésel posteriores a 2006, en línea con la normativa de etiquetas medioambientales, ya que suelen recibir la etiqueda de tipo B de la DGT, permitiendo su cirulación en la mayoría de laz zonas. Sin embargo, para una mejor inversión a futuro, recomienda buscar coches de etiqueta tipo C o superior.
-                 """)
+
+            Estas recomendaciones son generales y pueden variar según las necesidades y preferencias de cada comprador.     
+            Si deseas obtener más información de forma detallada, te recomendamos acceder al panel de control interactivo de PowerBI, donde podrás explorar los datos y visualizaciones de forma más interactiva.
+            """, unsafe_allow_html=True)
 
 
     st.markdown("""
