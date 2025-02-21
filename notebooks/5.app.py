@@ -952,7 +952,6 @@ elif menu_lateral =="Modelo predictivo":
 elif menu_lateral == "Conclusiones":
     st.markdown("## <b style='color:#A1753F; font-family: Cambria;'>Conclusiones</b>", unsafe_allow_html=True)
     st.markdown("""
-            - Priorizar la venta de coches con menos de 100.000 km, ya que se devalúan menos.
             - Enfocarse en la venta de coches con menos de 10 años de antigüedad para minimizar la devaluación.
             - Los concesionarios en Madrid, Andalucía y Cataluña deberían adquirir coches de precio más elevado debido a la mayor demanda en estas regiones.
             - No adquirir coches con más de 180.000 km, ya que la devaluación del precio es mucho más pronunciada.
